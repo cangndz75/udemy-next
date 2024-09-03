@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -65,7 +65,13 @@ const NewCoursePage = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <div className="flex gap-2 items-center">
+              <Button type="button" variant={"outline"}>
+                Cancel
+              </Button>
+              <Button type="submit">Submit</Button>
+              disabled={!isValid || isSubmitting}
+            </div>
           </form>
         </Form>
       </div>
