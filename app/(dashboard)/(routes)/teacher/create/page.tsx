@@ -59,7 +59,7 @@ const NewCoursePage = () => {
                 <FormItem>
                   <FormLabel>Title</FormLabel>
                   <FormControl>
-                    <Input placeholder="Course Title" {...field} />
+                    <Input disabled={isSubmitting} placeholder="Course Description" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -69,8 +69,9 @@ const NewCoursePage = () => {
               <Button type="button" variant={"outline"}>
                 Cancel
               </Button>
-              <Button type="submit">Submit</Button>
-              disabled={!isValid || isSubmitting}
+              <Button type="submit" disabled={!isValid || isSubmitting}>
+                Submit
+              </Button>
             </div>
           </form>
         </Form>

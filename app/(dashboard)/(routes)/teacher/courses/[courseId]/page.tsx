@@ -5,6 +5,7 @@ import { LayoutDashboardIcon } from "lucide-react";
 import { redirect } from "next/navigation";
 import React from "react";
 import TitleForm from "./_components/TitleForm";
+import DescriptionForm from "./_components/DescriptionForm";
 
 interface CourseDetailProps {
   //Burada id ile değeri almak için klasörün adını belirtiyoruz
@@ -63,6 +64,17 @@ const CourseDetail = async ({ params }: CourseDetailProps) => {
             <h2>Customize your course</h2>
           </div>
           <TitleForm initaldata={course} courseId={course.id}/>
+        </div>
+
+        {/*col-span 2 */}
+        <div>
+          <div className="flex items-center gap-2">
+            <Badge className="p-4" variant={"mybadge"}>
+              <LayoutDashboardIcon className="h-4 w-4 text-purple-700" />
+            </Badge>
+            <h2>Description your course</h2>
+          </div>
+          <DescriptionForm initaldata={course} courseId={course.id} />
         </div>
       </div>
     </div>
