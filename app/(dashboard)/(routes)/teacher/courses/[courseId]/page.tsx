@@ -1,11 +1,12 @@
 import { Badge } from "@/components/ui/badge";
 import { prismadb } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
-import { LayoutDashboardIcon } from "lucide-react";
+import { ImageIcon, LayoutDashboardIcon } from "lucide-react";
 import { redirect } from "next/navigation";
 import React from "react";
 import TitleForm from "./_components/TitleForm";
 import DescriptionForm from "./_components/DescriptionForm";
+import ImageForm from "./_components/ImageForm";
 
 interface CourseDetailProps {
   //Burada id ile değeri almak için klasörün adını belirtiyoruz
@@ -76,6 +77,17 @@ const CourseDetail = async ({ params }: CourseDetailProps) => {
           </div>
           <DescriptionForm initaldata={course} courseId={course.id} />
         </div>
+
+        <div>
+          <div className="flex items-center gap-2">
+            <Badge className="p-4" variant={"mybadge"}>
+              <ImageIcon className="h-4 w-4 text-purple-700" />
+            </Badge>
+            <h2>Image your course</h2>
+          </div>
+          <ImageForm initaldata={course} courseId={course.id} />
+        </div>
+
       </div>
     </div>
   );
