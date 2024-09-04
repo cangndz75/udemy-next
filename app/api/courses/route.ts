@@ -8,7 +8,10 @@ export async function POST(req: Request) {
         const {title} = await req.json();
 
         if(!userId) {
-            throw new Error('You must be logged in to create a course');
+            throw new NextResponse('Unauthorized', {status: 401});
+        }
+        if(!title) {
+            throw new NextResponse('Title is required', {status: 400});
         }
 
         const course = await prismadb.course.create({
@@ -21,7 +24,7 @@ export async function POST(req: Request) {
         return NextResponse.json(course);
 
     } catch (error) {
-        console.log("[COURSES", error);
+        console.log("[COURSES]", error);
         return new NextResponse("An error occurred", {status: 500});
     }
 }

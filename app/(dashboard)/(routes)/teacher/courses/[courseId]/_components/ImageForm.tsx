@@ -28,7 +28,7 @@ const ImageForm = ({ initaldata, courseId }: ImageFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      imageUrl: initaldata.imageUrl || "",
+      imageUrl: ""
     },
   });
 

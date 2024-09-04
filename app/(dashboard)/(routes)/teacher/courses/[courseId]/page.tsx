@@ -50,7 +50,7 @@ const CourseDetail = async ({ params }: CourseDetailProps) => {
             Course Setup
           </h1>
           <span className="text-base">
-            Complete all fields {completeFields}
+            Complete all fields {completeFields}/{totalFields}
           </span>
         </div>
       </div>
