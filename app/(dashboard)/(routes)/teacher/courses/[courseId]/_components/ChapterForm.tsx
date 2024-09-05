@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/hooks/use-toast";
@@ -19,6 +19,8 @@ import {
 } from "@/components/ui/form";
 import { Chapter, Course } from "@prisma/client";
 import { Input } from "@/components/ui/input";
+import ChapterList from "./ChapterList";
+import { list } from "postcss";
 const formSchema = z.object({
   title: z.string().min(1),
 });
@@ -63,6 +65,30 @@ const ChapterForm = ({ courseId, initaldata }: ChapterFormProps) => {
       });
     }
   };
+
+  const onReorder = async (updateData: { id: string; position: number }[]) => {
+    try {
+      setIsUpdating(true);
+      await axios.put(`/api/courses/${courseId}/chapters/reorder`, {
+        list: updateData,
+      });
+      toast({
+        title: "Chapters reordered",
+        description: "Chapters have been reordered successfully",
+        variant: "success",
+      });
+      router.refresh();
+    } catch (error) {
+      console.error(error);
+      
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  const onEdit = async (id: string) => {
+    router.push(`/dashboard/routes/teacher/courses/${courseId}/chapters/${id}`);
+  };
   return (
     <div className="mt-10 bg-slate-100 rounded-lg p-5">
       <div className="flex items-center justify-between">
@@ -92,11 +118,11 @@ const ChapterForm = ({ courseId, initaldata }: ChapterFormProps) => {
           )}
           {initaldata.chapters.length > 0 && (
             <div>
-              {initaldata.chapters.map((chapter) => (
-                <div key={chapter.id}>
-                  <p>{chapter.title}</p>
-                </div>
-              ))}
+              <ChapterList
+                items={initaldata.chapters || []}
+                onEdit={onEdit}
+                onReorder={onReorder}
+              />
             </div>
           )}
         </p>
