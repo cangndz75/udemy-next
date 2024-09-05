@@ -1,12 +1,14 @@
 import { Badge } from "@/components/ui/badge";
 import { prismadb } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
-import { ImageIcon, LayoutDashboardIcon } from "lucide-react";
+import { CassetteTapeIcon, DollarSignIcon, ImageIcon, LayoutDashboardIcon } from "lucide-react";
 import { redirect } from "next/navigation";
 import React from "react";
 import TitleForm from "./_components/TitleForm";
 import DescriptionForm from "./_components/DescriptionForm";
 import ImageForm from "./_components/ImageForm";
+import CategoryForm from "./_components/CategoryForm";
+import PriceForm from "./_components/PriceForm";
 
 interface CourseDetailProps {
   //Burada id ile değeri almak için klasörün adını belirtiyoruz
@@ -41,6 +43,12 @@ const CourseDetail = async ({ params }: CourseDetailProps) => {
   const totalFields = RequiredFields.length;
   const completeFields = RequiredFields.filter(Boolean).length;
   const completeText = `(${completeFields}/${totalFields})`;
+  //Kategorileri almak için category tablosundan verileri çekiyoruz ve name alanına göre sıralıyoruz
+  const categories = await prismadb.category.findMany({
+    orderBy: {
+      name: "asc",
+    },
+  });
 
   return (
     <div>
@@ -64,7 +72,7 @@ const CourseDetail = async ({ params }: CourseDetailProps) => {
             </Badge>
             <h2>Customize your course</h2>
           </div>
-          <TitleForm initaldata={course} courseId={course.id}/>
+          <TitleForm initaldata={course} courseId={course.id} />
         </div>
 
         {/*col-span 2 */}
@@ -88,6 +96,32 @@ const CourseDetail = async ({ params }: CourseDetailProps) => {
           <ImageForm initaldata={course} courseId={course.id} />
         </div>
 
+        <div>
+          <div className="flex items-center gap-2">
+            <Badge className="p-4" variant={"mybadge"}>
+              <CassetteTapeIcon className="h-4 w-4 text-purple-700" />
+            </Badge>
+            <h2>Description your course</h2>
+          </div>
+          <CategoryForm
+            initaldata={course}
+            courseId={course.id}
+            options={categories.map((category) => ({
+              label: category.name,
+              value: category.id,
+            }))}
+          />
+        </div>
+
+        <div>
+          <div className="flex items-center gap-2">
+            <Badge className="p-4" variant={"mybadge"}>
+              <DollarSignIcon className="h-4 w-4 text-purple-700" />
+            </Badge>
+            <h2>Price your course</h2>
+          </div>
+          <PriceForm initaldata={course} courseId={course.id} />
+        </div>
       </div>
     </div>
   );
