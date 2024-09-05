@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { prismadb } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
 import {
+  BarChart3,
   CassetteTapeIcon,
   DollarSignIcon,
   FileX2Icon,
@@ -16,6 +17,7 @@ import ImageForm from "./_components/ImageForm";
 import CategoryForm from "./_components/CategoryForm";
 import PriceForm from "./_components/PriceForm";
 import AttachmentForm from "./_components/AttachmentForm";
+import ChapterForm from "./_components/ChapterForm";
 
 interface CourseDetailProps {
   //Burada id ile değeri almak için klasörün adını belirtiyoruz
@@ -36,6 +38,11 @@ const CourseDetail = async ({ params }: CourseDetailProps) => {
       id: params.courseId,
     },
     include: {
+      chapters:{
+        orderBy:{
+          position:"asc"
+        }
+      },
       attachments: {
         orderBy: {
           createdAt: "desc",
@@ -52,6 +59,8 @@ const CourseDetail = async ({ params }: CourseDetailProps) => {
     course.price,
     course.imageUrl,
     course.categoryId,
+    //Kursun chapter'larından herhangi biri yayınlanmış mı kontrolü yapılıyor.
+    course.chapters.some(chapter => chapter.isPublished)
   ];
 
   const totalFields = RequiredFields.length;
@@ -87,6 +96,16 @@ const CourseDetail = async ({ params }: CourseDetailProps) => {
             <h2>Customize your course</h2>
           </div>
           <TitleForm initaldata={course} courseId={course.id} />
+        </div>
+
+        <div>
+          <div className="flex items-center gap-2 mt-4">
+            <Badge className="p-4" variant={"mybadge"}>
+              <BarChart3 className="h-4 w-4 text-purple-700" />
+            </Badge>
+            <h2>Chart</h2>
+          </div>
+          <ChapterForm initaldata={course} courseId={course.id} />
         </div>
 
         {/*col-span 2 */}
