@@ -7,6 +7,10 @@ import {
   DropResult,
 } from "@hello-pangea/dnd";
 import { Chapter } from "@prisma/client";
+import { Edit, Grid } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 interface ChapterListProps {
   items: Chapter[];
@@ -64,7 +68,33 @@ const ChapterList = ({ items, onReorder, onEdit }: ChapterListProps) => {
                     className="p-4 bg-white shadow rounded mb-2 cursor-pointer"
                     onClick={() => onEdit(item.id)}
                   >
-                    {item.title}
+                    <div className="flex items-center">
+                      <div>
+                        <Grid className="w-5 h-5 mr-2" />
+                      </div>
+                      <div>{item.title}</div>
+                      <div className="ml-auto flex items-center">
+                        <div>
+                          <Badge className="p-2 bg-green-500 text-black">
+                            Free
+                          </Badge>
+                          <Badge
+                            className={cn(
+                              "p-2 bg-slate-300 text-black",
+                              item.isPublished && "bg-purple-500 text-white"
+                            )}
+                          >
+                            {item.isPublished ? "Published" : "Draft"}
+                          </Badge>
+                        </div>
+                        <Button
+                          variant={"ghost"}
+                          onClick={() => onEdit(item.id)}
+                        >
+                          <Edit className="w-5 h-5" />
+                        </Button>
+                      </div>
+                    </div>
                   </div>
                 )}
               </Draggable>
