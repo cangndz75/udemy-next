@@ -6,7 +6,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Attachment, Course } from "@prisma/client";
 import { Button } from "@/components/ui/button";
-import { PlusIcon, Undo } from "lucide-react";
+import { File, Loader2Icon, PlusIcon, Trash2, Undo } from "lucide-react";
 import FileUpload from "@/components/file-upload";
 
 const formSchema = z.object({
@@ -103,7 +103,34 @@ const AttachmentForm = ({ initaldata, courseId }: AttachmentFormProps) => {
       {!isEditing && (
         <>
           {initaldata.attachments.length === 0 && <p>No attachments</p>}
-          {initaldata.attachments.length > 0 && <p>Test</p>}
+          {initaldata.attachments.length > 0 && (
+            <div className="space-y-3">
+              {initaldata.attachments.map((attachment) => (
+                <div
+                  className="flex items-center justify-between w-full p-3"
+                  key={attachment.id}
+                >
+                  <div className="flex items-center gap-2">
+                    <File className="h-5 w-5" />
+                    <p className="text-xs">{attachment.name}</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {deletingId === attachment.id ? (
+                      <Loader2Icon className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <Button
+                        onClick={() => onDelete(attachment.id)}
+                        variant="ghost"
+                        size="icon"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </>
       )}
 
