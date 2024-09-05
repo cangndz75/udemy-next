@@ -1,7 +1,13 @@
 import { Badge } from "@/components/ui/badge";
 import { prismadb } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
-import { CassetteTapeIcon, DollarSignIcon, ImageIcon, LayoutDashboardIcon } from "lucide-react";
+import {
+  CassetteTapeIcon,
+  DollarSignIcon,
+  FileX2Icon,
+  ImageIcon,
+  LayoutDashboardIcon,
+} from "lucide-react";
 import { redirect } from "next/navigation";
 import React from "react";
 import TitleForm from "./_components/TitleForm";
@@ -9,6 +15,7 @@ import DescriptionForm from "./_components/DescriptionForm";
 import ImageForm from "./_components/ImageForm";
 import CategoryForm from "./_components/CategoryForm";
 import PriceForm from "./_components/PriceForm";
+import AttachmentForm from "./_components/AttachmentForm";
 
 interface CourseDetailProps {
   //Burada id ile değeri almak için klasörün adını belirtiyoruz
@@ -27,6 +34,13 @@ const CourseDetail = async ({ params }: CourseDetailProps) => {
   const course = await prismadb.course.findUnique({
     where: {
       id: params.courseId,
+    },
+    include: {
+      attachments: {
+        orderBy: {
+          createdAt: "desc",
+        },
+      },
     },
   });
   if (!course) {
@@ -101,7 +115,7 @@ const CourseDetail = async ({ params }: CourseDetailProps) => {
             <Badge className="p-4" variant={"mybadge"}>
               <CassetteTapeIcon className="h-4 w-4 text-purple-700" />
             </Badge>
-            <h2>Description your course</h2>
+            <h2>Category your course</h2>
           </div>
           <CategoryForm
             initaldata={course}
@@ -121,6 +135,16 @@ const CourseDetail = async ({ params }: CourseDetailProps) => {
             <h2>Price your course</h2>
           </div>
           <PriceForm initaldata={course} courseId={course.id} />
+        </div>
+
+        <div>
+          <div className="flex items-center gap-2">
+            <Badge className="p-4" variant={"mybadge"}>
+              <FileX2Icon className="h-4 w-4 text-purple-700" />
+            </Badge>
+            <h2>Attachment your course</h2>
+          </div>
+          <AttachmentForm initaldata={course} courseId={course.id} />
         </div>
       </div>
     </div>
