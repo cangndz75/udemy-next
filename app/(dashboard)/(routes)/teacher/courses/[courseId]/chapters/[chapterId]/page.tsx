@@ -55,15 +55,21 @@ const ChapterIDPage = async ({ params }: ChapterIDPageProps) => {
         <Banner label="This chapter is unplished" variant={"warning"}></Banner>
       )}
       <div className="p-4">
-        <div className="flex items-center">
-          <div className="w-full">
-            <Link href={`/teacher/courses/${params.courseId}`}>
+        <div className="items-center">
+          <div className="w-36">
+            <Link href={`/teacher/courses/${params.courseId}`} className="flex items-center">
               <ChevronLeft className="h-5 w-5 mr-2" /> Back to course
             </Link>
-            <div className="flex items-center justify-between w-full mt-4">
-              <h1>Chapter Creation</h1>
-              <span>Complete all fields {completeText} </span>
-            </div>
+          </div>
+          <div className="flex items-center justify-between w-full mt-4">
+            <h1 className="text-4xl font-semibold">Chapter Creation</h1>
+            <span>Complete all fields {completeText} </span>
+            <ChapterAction
+              chapterId={params.chapterId}
+              courseId={params.courseId}
+              disabled={!isComplete}
+              isPublished={chapter.isPublished}
+            />
           </div>
         </div>
 
@@ -105,12 +111,6 @@ const ChapterIDPage = async ({ params }: ChapterIDPageProps) => {
               initaldata={chapter}
               chapterId={params.chapterId}
               courseId={params.courseId}
-            />
-            <ChapterAction
-              chapterId={params.chapterId}
-              courseId={params.courseId}
-              disabled={!isComplete}
-              isPublished={chapter.isPublished}
             />
           </div>
         </div>
