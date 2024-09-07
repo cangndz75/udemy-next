@@ -92,7 +92,14 @@ const ChapterVideoForm = ({ initaldata, chapterId, courseId }: VideoProps) => {
         ) : (
           <>
             <div className="relative aspect-video mt-2">
-              <MuxPlayer playbackId={initaldata?.muxData?.playbackId || ""} />
+              <MuxPlayer
+                playbackId={initaldata?.muxData?.playbackId || ""}
+                style={{
+                  maxHeight: "500px", // Yüksekliği sınırlandırın
+                  width: "100%", // Genişliği tam yapın
+                  aspectRatio: "9 / 16", // Dikey videolar için oran
+                }}
+              />
             </div>
           </>
         ))}

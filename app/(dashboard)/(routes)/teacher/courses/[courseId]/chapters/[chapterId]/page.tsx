@@ -1,6 +1,6 @@
 import { prismadb } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
-import { Badge, ChevronLeft, LayoutDashboardIcon } from "lucide-react";
+import { Badge, ChevronLeft, LayoutDashboardIcon, VideoIcon } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -84,9 +84,9 @@ const ChapterIDPage = async ({ params }: ChapterIDPageProps) => {
         <div>
           <div className="flex items-center gap-2">
             <Badge className="p-4">
-              <LayoutDashboardIcon className="h-4 w-4 text-purple-700" />
+              <VideoIcon className="h-4 w-4 text-purple-700" />
             </Badge>
-            <h2 className="text-xl">Customize your course</h2>
+            <h2 className="text-xl">Chapter Detail</h2>
           </div>
           <ChapterVideoForm
             initaldata={chapter}
