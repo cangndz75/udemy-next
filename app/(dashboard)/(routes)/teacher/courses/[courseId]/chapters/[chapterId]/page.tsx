@@ -4,6 +4,8 @@ import { Badge, ChevronLeft, LayoutDashboardIcon } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
+import TitleForm from "../_components/TitleForm";
+import ChapterDescriptionForm from "../_components/ChapterDescriptionForm";
 
 interface ChapterIDPageProps {
   params: {
@@ -58,6 +60,9 @@ const ChapterIDPage = async ({ params }: ChapterIDPageProps) => {
             </Badge>
             <h2 className="text-xl">Customize your course</h2>
           </div>
+          <TitleForm initaldata={chapter} chapterId={params.chapterId} courseId={params.courseId} />
+          <ChapterDescriptionForm initaldata={chapter} chapterId={params.chapterId} courseId={params.courseId} />
+
         </div>
       </div>
     </div>
