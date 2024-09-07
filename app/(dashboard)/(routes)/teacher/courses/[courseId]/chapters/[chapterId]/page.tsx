@@ -7,6 +7,7 @@ import React from "react";
 import TitleForm from "../_components/TitleForm";
 import ChapterDescriptionForm from "../_components/ChapterDescriptionForm";
 import ChapterAccessForm from "../_components/ChapterAccessForm";
+import ChapterVideoForm from "../_components/ChapterVideoForm";
 
 interface ChapterIDPageProps {
   params: {
@@ -54,6 +55,7 @@ const ChapterIDPage = async ({ params }: ChapterIDPageProps) => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-5 md:mt-16">
+        {/* col span 1 */}
         <div>
           <div className="flex items-center gap-2">
             <Badge className="p-4">
@@ -61,10 +63,36 @@ const ChapterIDPage = async ({ params }: ChapterIDPageProps) => {
             </Badge>
             <h2 className="text-xl">Customize your course</h2>
           </div>
-          <TitleForm initaldata={chapter} chapterId={params.chapterId} courseId={params.courseId} />
-          <ChapterDescriptionForm initaldata={chapter} chapterId={params.chapterId} courseId={params.courseId} />
-          <ChapterAccessForm  initaldata={chapter} chapterId={params.chapterId} courseId={params.courseId} />
+          <TitleForm
+            initaldata={chapter}
+            chapterId={params.chapterId}
+            courseId={params.courseId}
+          />
+          <ChapterDescriptionForm
+            initaldata={chapter}
+            chapterId={params.chapterId}
+            courseId={params.courseId}
+          />
+          <ChapterAccessForm
+            initaldata={chapter}
+            chapterId={params.chapterId}
+            courseId={params.courseId}
+          />
+        </div>
 
+        {/* col span 2 */}
+        <div>
+          <div className="flex items-center gap-2">
+            <Badge className="p-4">
+              <LayoutDashboardIcon className="h-4 w-4 text-purple-700" />
+            </Badge>
+            <h2 className="text-xl">Customize your course</h2>
+          </div>
+          <ChapterVideoForm
+            initaldata={chapter}
+            chapterId={params.chapterId}
+            courseId={params.courseId}
+          />
         </div>
       </div>
     </div>
