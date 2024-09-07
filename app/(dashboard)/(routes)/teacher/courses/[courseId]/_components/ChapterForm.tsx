@@ -87,7 +87,7 @@ const ChapterForm = ({ courseId, initaldata }: ChapterFormProps) => {
   };
 
   const onEdit = async (id: string) => {
-    router.push(`/dashboard/routes/teacher/courses/${courseId}/chapters/${id}`);
+    router.push(`/teacher/courses/${courseId}/chapters/${id}`);
   };
   return (
     <div className="mt-10 bg-slate-100 rounded-lg p-5">
