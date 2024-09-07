@@ -1,6 +1,6 @@
+"use client"
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { set } from "react-hook-form";
 
 interface ChapterActionProps {
   disabled: boolean;

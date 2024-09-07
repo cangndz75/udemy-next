@@ -14,6 +14,7 @@ import ChapterDescriptionForm from "../_components/ChapterDescriptionForm";
 import ChapterAccessForm from "../_components/ChapterAccessForm";
 import ChapterVideoForm from "../_components/ChapterVideoForm";
 import Banner from "@/components/Banner";
+import ChapterAction from "../_components/ChapterAction";
 
 interface ChapterIDPageProps {
   params: {
@@ -46,6 +47,8 @@ const ChapterIDPage = async ({ params }: ChapterIDPageProps) => {
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
   const completeText = `( ${completedFields} / ${totalFields} )`;
+
+  const isComplete = requiredFields.every(Boolean);
   return (
     <>
       {!chapter?.isPublished && (
@@ -102,6 +105,12 @@ const ChapterIDPage = async ({ params }: ChapterIDPageProps) => {
               initaldata={chapter}
               chapterId={params.chapterId}
               courseId={params.courseId}
+            />
+            <ChapterAction
+              chapterId={params.chapterId}
+              courseId={params.courseId}
+              disabled={!isComplete}
+              isPublished={chapter.isPublished}
             />
           </div>
         </div>
