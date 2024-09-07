@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import React from "react";
 import TitleForm from "../_components/TitleForm";
 import ChapterDescriptionForm from "../_components/ChapterDescriptionForm";
+import ChapterAccessForm from "../_components/ChapterAccessForm";
 
 interface ChapterIDPageProps {
   params: {
@@ -62,6 +63,7 @@ const ChapterIDPage = async ({ params }: ChapterIDPageProps) => {
           </div>
           <TitleForm initaldata={chapter} chapterId={params.chapterId} courseId={params.courseId} />
           <ChapterDescriptionForm initaldata={chapter} chapterId={params.chapterId} courseId={params.courseId} />
+          <ChapterAccessForm  initaldata={chapter} chapterId={params.chapterId} courseId={params.courseId} />
 
         </div>
       </div>
