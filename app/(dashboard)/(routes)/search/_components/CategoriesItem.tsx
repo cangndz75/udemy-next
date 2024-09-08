@@ -22,11 +22,13 @@ const CategoriesItem = ({ label, value, icon: Icon }: CategoriesItemProps) => {
   const isSelected = currentCategoryId === value;
 
   const onClick = () => {
+    const isAll = label === "All";
+    
     const url = qs.stringifyUrl(
       {
         url: pathname,
         query: {
-          categoryId: isSelected ? null : value,
+          categoryId: isAll ? undefined : (isSelected ? null : value), 
           title: currentTitle,
         },
       },

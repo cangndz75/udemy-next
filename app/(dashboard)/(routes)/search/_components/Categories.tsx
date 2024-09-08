@@ -7,6 +7,8 @@ import { FaLaptopCode } from "react-icons/fa";
 import { FaCode } from "react-icons/fa";
 import { TbBrandReactNative } from "react-icons/tb";
 import { FaJs } from "react-icons/fa";
+import { MdOutlineDensitySmall } from "react-icons/md";
+import { LiaRobotSolid } from "react-icons/lia";
 
 
 interface CategoriesProps {
@@ -14,12 +16,13 @@ interface CategoriesProps {
 }
 
 const iconMap: Record<Category["name"], IconType> = {
-    "Artifical Intelligence": TbBrandReactNative,
+    "Artifical Intelligence": LiaRobotSolid,
     "Frontend Development": TbBrandReactNative,
     "Backend": FaLaptopCode,
     "FullStack": FaCode,
     "React Native": TbBrandReactNative,
     "JavaScript": FaJs,
+    "All":MdOutlineDensitySmall
 }
 
 const Categories = ({items}:CategoriesProps) => {
