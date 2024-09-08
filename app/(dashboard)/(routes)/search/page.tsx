@@ -1,8 +1,33 @@
 import { prismadb } from "@/lib/db";
 import React from "react";
 import Categories from "./_components/Categories";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+import { getCourses } from "@/actions/get-courses";
+import CourseList from "@/components/CourseList";
 
-const SearchPage = async () => {
+interface SearchPageProps {
+  searchParams: {
+    title: string;
+    categoryId: string;
+  };
+}
+
+const SearchPage = async ({ searchParams }: SearchPageProps) => {
+  const { userId } = auth();
+  
+  if (!userId) return redirect("/");
+
+  console.log(searchParams, "searchParams");
+  console.log(userId, "userId");
+
+  const courses = await getCourses({
+    userId,
+    ...searchParams
+  });
+
+  console.log(courses, "fetched courses");
+
   const categories = await prismadb.category.findMany({
     orderBy: {
       name: "asc",
@@ -18,7 +43,9 @@ const SearchPage = async () => {
         </div>
       </div>
 
-      <div className="lg:col-span-5"></div>
+      <div className="lg:col-span-4">
+        <CourseList items={courses}/>
+      </div>
     </div>
   );
 };
